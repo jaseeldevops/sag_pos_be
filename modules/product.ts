@@ -4,6 +4,13 @@ export class Product {
   desc: string = "";
   price: string = "";
   qty: string = "";
+  createdBy: string = "";
+  createdAt: string = "";
+  updatedBy: string = "";
+  updatedAt: string = "";
+  deletedBy: string = "";
+  deletedAt: string = "";
+  deleted: boolean = false;
 }
 
 export class Purchase {

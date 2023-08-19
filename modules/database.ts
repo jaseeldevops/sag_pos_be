@@ -26,8 +26,7 @@ export const dbGetCollectionCount = async (org: any, item: any, query: any) => {
   return collection.count({ deleted: { $ne: true }, ...query });
 };
 // ///////////////////////////////////////////////////////
-export const dbGetProducts = async (org: any) => {
-  const database = client.db(org);
+export const dbGetProducts = async () => {
   const collection = database.collection("products");
   return collection.find({ deleted: { $ne: true } }).toArray();
 };
