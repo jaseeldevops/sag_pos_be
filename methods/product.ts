@@ -9,8 +9,8 @@ import {
 import { Product } from "../modules/product";
 
 export const getAllProducts = async (req: any, res: any) => {
-  const authkey = req.headers.authkey.split(" ");
-  req.body.creater = authkey[1];
+  // const authkey = req.headers.authkey.split(" ");
+  // req.body.creater = authkey[1];
   await dbGetProducts()
     .then((dbRes: Product[]) => res.send(dbRes))
     .catch(() => res.status(502).send({ msg: "Unable To feach Data" }));
