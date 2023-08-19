@@ -6,7 +6,7 @@ const express = require("express");
 //   editSinglePurchase,
 //   deleteSinglePurchase,
 // } from "../methods/purchase";
-import { addSingleProduct } from "../methods/product";
+import { addSingleProduct, getAllProducts } from "../methods/product";
 import {
   getAllSales,
   getSingleSale,
@@ -29,7 +29,7 @@ export const a1: any = express.Router();
 // ////////////////////////////////////////////////////////////////
 // a1.get("/dashboard", getDashBoardData);
 // ////////////////////////////////////////////////////////////////
-// a1.get("/products", getAllProducts);
+a1.get("/products", getAllProducts);
 // a1.get("/products/:search", getProductsBySearch);
 a1.post("/product", addSingleProduct);
 // a1.put("/product", editSingleProduct);
