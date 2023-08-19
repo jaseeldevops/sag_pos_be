@@ -4,7 +4,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-const port = 3100; // Core
+const port = 3200; // Core
 
 import { a1 } from "./routes/a1";
 import { connectDataBase } from "./modules/database";
