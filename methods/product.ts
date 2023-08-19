@@ -33,6 +33,16 @@ export const addSingleProduct = async (req: any, res: any) => {
     // createdBy: authkey[1],
     createdAt: Date(),
   };
+
+  if (product.itemCode === "") {
+    res.status(422).send({ msg: "Item Code is misssing" });
+    return;
+  }
+  if (product.itemId === "") {
+    res.status(422).send({ msg: "Item ID is misssing" });
+    return;
+  }
+
   await dbGetProduct({ itemCode: product.itemCode })
     .then(async (dbRes: any) => {
       if (dbRes === null)
