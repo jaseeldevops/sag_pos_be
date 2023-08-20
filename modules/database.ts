@@ -34,7 +34,7 @@ export const dbSearchProducts = async (search: any) => {
   const collection = database.collection("products");
   let regex = new RegExp(search, "i");
   return collection
-    .find({ deleted: { $ne: true }, name: { $regex: regex } })
+    .find({ deleted: { $ne: true }, itemName: { $regex: regex } })
     .toArray();
 };
 export const dbGetProduct = async (data: any, _id?: any) => {
