@@ -10,6 +10,9 @@ import { a1 } from "./routes/a1";
 import { connectDataBase } from "./modules/database";
 
 app.use("/a1", a1);
+app.get("/", (req: any, res: any) => {
+  res.send("hallow");
+});
 connectDataBase();
 
 app.listen(port, () => {
