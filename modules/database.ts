@@ -30,8 +30,7 @@ export const dbGetProducts = async () => {
   const collection = database.collection("products");
   return collection.find({ deleted: { $ne: true } }).toArray();
 };
-export const dbSearchProducts = async (org: any, search: any) => {
-  const database = client.db(org);
+export const dbSearchProducts = async (search: any) => {
   const collection = database.collection("products");
   let regex = new RegExp(search, "i");
   return collection
@@ -47,8 +46,8 @@ export const dbPostProduct = async (data: Product) => {
   const collection = database.collection("products");
   return collection.insertOne(data);
 };
-export const dbUpdateProduct = async (org: any, data: any) => {
-  const database = client.db(org);
+export const dbUpdateProduct = async (data: any) => {
+  // const database = client.db(org);
   const collection = database.collection("products");
   const _id = new ObjectId(data._id);
   delete data._id;

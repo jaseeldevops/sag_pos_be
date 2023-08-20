@@ -1,6 +1,7 @@
 export class Product {
   itemCode: string = "";
-  itemId: string = "";
+  barcode: string = "";
+  itemName: string = "";
   desc: string = "";
   price: string = "";
   qty: string = "";
