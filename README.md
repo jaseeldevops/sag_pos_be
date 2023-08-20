@@ -16,6 +16,22 @@ Body : {
 "qty":""
 }
 
+Edit Product
+URL : http://sagpos.cuownbe.co.in/a1/product
+Method : PUT
+Body : {
+"_id":"",
+"itemCode":"",
+"itemId":"",
+"desc":"",
+"price":"",
+"qty":""
+}
+
 Get Prodects
 URL : http://sagpos.cuownbe.co.in/a1/products
+Method : GET
+
+Get Prodects By search
+URL : http://sagpos.cuownbe.co.in/a1/products/{itemName}
 Method : GET

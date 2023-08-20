@@ -24,6 +24,14 @@ export const getProductsBySearch = async (req: any, res: any) => {
     .catch(() => res.status(502).send({ msg: "Unable To feach Data" }));
 };
 
+export const getProductsByBarcode = async (req: any, res: any) => {
+  // const authkey = req.headers.authkey.split(" ");
+  // req.body.creater = authkey[1];
+  await dbGetProduct({ barcode: req.params.barcode })
+    .then((dbRes: any) => res.send(dbRes))
+    .catch(() => res.status(502).send({ msg: "Unable To feach Data" }));
+};
+
 export const addSingleProduct = async (req: any, res: any) => {
   // const authkey = req.headers.authkey.split(" ");
   var product = new Product();

@@ -6,7 +6,7 @@ const express = require("express");
 //   editSinglePurchase,
 //   deleteSinglePurchase,
 // } from "../methods/purchase";
-import { addSingleProduct, deleteSingleProduct, editSingleProduct, getAllProducts, getProductsBySearch } from "../methods/product";
+import { addSingleProduct, deleteSingleProduct, editSingleProduct, getAllProducts, getProductsByBarcode, getProductsBySearch } from "../methods/product";
 import {
   getAllSales,
   getSingleSale,
@@ -30,6 +30,7 @@ export const a1: any = express.Router();
 // a1.get("/dashboard", getDashBoardData);
 // ////////////////////////////////////////////////////////////////
 a1.get("/products", getAllProducts);
+a1.get("/productsbybarcode/:barcode", getProductsByBarcode);
 a1.get("/products/:search", getProductsBySearch);
 a1.post("/product", addSingleProduct);
 a1.put("/product", editSingleProduct);
