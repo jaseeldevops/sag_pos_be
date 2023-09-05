@@ -80,32 +80,32 @@ export const editSingleProduct = async (req: any, res: any) => {
     updatedAt: Date(),
   };
 
-  if (product.itemCode === "") {
-    res.status(422).send({ msg: "Item Code is misssing" });
-    return;
+  if (product.hasOwnProperty("itemCode")) {
+    var pass = false;
+    await dbGetProduct({ itemCode: product.itemCode })
+      .then(async (dbRes: any) => {
+        if (dbRes === null || dbRes._id.toString() === req.body._id)
+          pass = true;
+        else res.status(502).send({ msg: "Item ID already exist" });
+      })
+      .catch((e) => res.status(502).send({ msg: "Not Able to Insert" }));
+    if (!pass) return;
   }
-  if (product.barcode === "") {
-    res.status(422).send({ msg: "Barcode is misssing" });
-    return;
+  if (product.hasOwnProperty("barcode")) {
+    var pass = false;
+    await dbGetProduct({ barcode: product.barcode })
+      .then(async (dbRes: any) => {
+        if (dbRes === null || dbRes._id.toString() === req.body._id)
+          pass = true;
+        else res.status(502).send({ msg: "Barcode already exist" });
+      })
+      .catch((e) => res.status(502).send({ msg: "Not Able to Insert" }));
+    if (!pass) return;
   }
 
-  await dbGetProduct({ itemCode: product.itemCode })
-    .then(async (dbRes: any) => {
-      if (dbRes === null || dbRes._id.toString() === req.body._id) {
-        await dbGetProduct({ barcode: product.barcode })
-          .then(async (dbRes: any) => {
-            if (dbRes === null || dbRes._id.toString() === req.body._id) {
-              await dbUpdateProduct(product)
-                .then(() => res.send({ msg: "Succes" }))
-                .catch(() =>
-                  res.status(502).send({ msg: "Not Able to Insert" })
-                );
-            } else res.status(502).send({ msg: "Name already exist" });
-          })
-          .catch((e) => res.status(502).send({ msg: "Not Able to Insert" }));
-      } else res.status(502).send({ msg: "Name already exist" });
-    })
-    .catch((e) => res.status(502).send({ msg: "Not Able to Insert" }));
+  await dbUpdateProduct(product)
+    .then(() => res.send({ msg: "Succes" }))
+    .catch(() => res.status(502).send({ msg: "Not Able to Insert" }));
 };
 
 export const deleteSingleProduct = async (req: any, res: any) => {
