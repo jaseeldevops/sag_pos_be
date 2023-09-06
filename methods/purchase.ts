@@ -17,7 +17,7 @@ export const getAllPurchases = async (req: any, res: any) => {
 
 export const getSinglePurchase = async (req: any, res: any) => {
   //   const authkey = req.headers.authkey.split(" ");
-  
+
   await dbGetPurchase(req.params._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes?.list?.length; i++)
@@ -33,11 +33,15 @@ export const addPurchase = async (req: any, res: any) => {
   //   const authkey = req.headers.authkey.split(" ");
 
   if (!req.body.hasOwnProperty("list")) {
-    res.status(422).send({ msg: "Item List is missing (EPx1)" });
+    res
+      .status(422)
+      .send({ msg: "Item List is missing (EPx1)", body: req.body });
     return;
   }
-  if (typeof req.body.list === 'object') {
-    res.status(422).send({ msg: "Item List is missing (EPx2)" });
+  if (typeof req.body.list === "object") {
+    res
+      .status(422)
+      .send({ msg: "Item List is missing (EPx2)", body: req.body });
     return;
   }
   if (!(req.body?.list?.length > 0)) {
