@@ -3,13 +3,13 @@ import {
   getAllPurchases,
   getSinglePurchase,
   addPurchase,
-  //   editSinglePurchase,
-  //   deleteSinglePurchase,
+  editPurchase,
+  deletePurchase,
 } from "../methods/purchase";
 import {
-  addSingleProduct,
-  deleteSingleProduct,
-  editSingleProduct,
+  addProduct,
+  deleteProduct,
+  editProduct,
   getAllProducts,
   getProductsByBarcode,
   getProductsBySearch,
@@ -39,15 +39,15 @@ export const a1: any = express.Router();
 a1.get("/products", getAllProducts);
 a1.get("/productsbybarcode/:barcode", getProductsByBarcode);
 a1.get("/products/:search", getProductsBySearch);
-a1.post("/product", addSingleProduct);
-a1.put("/product", editSingleProduct);
-a1.delete("/product/:_id", deleteSingleProduct);
+a1.post("/product", addProduct);
+a1.put("/product", editProduct);
+a1.delete("/product/:_id", deleteProduct);
 // ////////////////////////////////////////////////////////////////
 a1.get("/purchases", getAllPurchases);
 a1.get("/purchase/:_id", getSinglePurchase);
 a1.post("/purchase", addPurchase);
-// a1.put("/purchase", editSinglePurchase);
-// a1.delete("/purchase/:_id", deleteSinglePurchase);
+a1.put("/purchase", editPurchase);
+a1.delete("/purchase/:_id", deletePurchase);
 // ////////////////////////////////////////////////////////////////
 // a1.get("/sales", getAllSales);
 // a1.get("/sale/:_id", getSingleSale);

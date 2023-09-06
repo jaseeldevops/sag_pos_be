@@ -59,7 +59,7 @@ export const addPurchase = async (req: any, res: any) => {
     .catch(() => res.status(502).send({ msg: "Not Able to Insert (EPx4)" }));
 };
 
-export const editSinglePurchase = async (req: any, res: any) => {
+export const editPurchase = async (req: any, res: any) => {
   //   const authkey = req.headers.authkey.split(" ");
   const purchase = {
     ...req.body,
@@ -96,25 +96,27 @@ export const editSinglePurchase = async (req: any, res: any) => {
     .catch(() => res.status(502).send({ msg: "Not Able to Insert (EPx8)" }));
 };
 
-// export const deleteSinglePurchase = async (req: any, res: any) => {
-//   //   const authkey = req.headers.authkey.split(" ");
-//   //   req.params.deletedBy = authkey[1];
-//   req.params.deletedAt =new  Date();
-//   req.params.deleted = true;
+export const deletePurchase = async (req: any, res: any) => {
+  //   const authkey = req.headers.authkey.split(" ");
+  //   req.params.deletedBy = authkey[1];
+  req.params.deletedAt = new Date();
+  req.params.deleted = true;
 
-//   await dbGetPurchase(req.params?._id)
-//     .then(async (dbRes) => {
-//       for (let i = 0; i < dbRes.list.length; i++)
-//         dbRes.list[i].qty = -Number(dbRes.list[i].qty);
-//       await dbUpdatePurchase(req.params)
-//         .then(() => {
-//           res.send({ msg: "Succes" });
-//           addPurchaseToStock(dbRes.list);
-//         })
-//         .catch(() => res.status(502).send({ msg: "Not Able to Delete" }));
-//     })
-//     .catch(() => res.status(502).send({ msg: "Not Able to Delete" }));
-// };
+  await dbGetPurchase(req.params?._id)
+    .then(async (dbRes) => {
+      for (let i = 0; i < dbRes.list.length; i++)
+        dbRes.list[i].qty = -Number(dbRes.list[i].qty);
+      await dbUpdatePurchase(req.params)
+        .then(() => {
+          res.send({ msg: "Succes" });
+          addPurchaseToStock(dbRes.list);
+        })
+        .catch(() =>
+          res.status(502).send({ msg: "Not Able to Delete (EPx9)" })
+        );
+    })
+    .catch(() => res.status(502).send({ msg: "Not Able to Delete (EPx10)" }));
+};
 
 // //////////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////

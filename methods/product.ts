@@ -32,7 +32,7 @@ export const getProductsByBarcode = async (req: any, res: any) => {
     .catch(() => res.status(502).send({ msg: "Unable To feach Data" }));
 };
 
-export const addSingleProduct = async (req: any, res: any) => {
+export const addProduct = async (req: any, res: any) => {
   // const authkey = req.headers.authkey.split(" ");
   var product = new Product();
   product = {
@@ -70,7 +70,7 @@ export const addSingleProduct = async (req: any, res: any) => {
     .catch((e) => res.status(502).send({ msg: "Not Able to Insert" }));
 };
 
-export const editSingleProduct = async (req: any, res: any) => {
+export const editProduct = async (req: any, res: any) => {
   // const authkey = req.headers.authkey.split(" ");
   const product = {
     ...req.body,
@@ -106,7 +106,7 @@ export const editSingleProduct = async (req: any, res: any) => {
     .catch(() => res.status(502).send({ msg: "Not Able to Insert" }));
 };
 
-export const deleteSingleProduct = async (req: any, res: any) => {
+export const deleteProduct = async (req: any, res: any) => {
   // const authkey = req.headers.authkey.split(" ");
   // req.params.deletedBy = authkey[1];
   req.params.deletedAt = Date();
