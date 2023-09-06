@@ -33,15 +33,11 @@ export const addPurchase = async (req: any, res: any) => {
   //   const authkey = req.headers.authkey.split(" ");
 
   if (!req.body.hasOwnProperty("list")) {
-    res
-      .status(422)
-      .send({ msg: "Item List is missing (EPx1)", body: req.body });
+    res.status(422).send({ msg: "Item List is missing (EPx1)" });
     return;
   }
-  if (typeof req.body.list === "object") {
-    res
-      .status(422)
-      .send({ msg: "Item List is missing (EPx2)", body: req.body });
+  if (!(typeof req.body.list === "object")) {
+    res.status(422).send({ msg: "Item List is missing (EPx2)" });
     return;
   }
   if (!(req.body?.list?.length > 0)) {
