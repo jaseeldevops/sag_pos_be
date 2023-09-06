@@ -34,9 +34,7 @@ export const getProductsByBarcode = async (req: any, res: any) => {
 
 export const addSingleProduct = async (req: any, res: any) => {
   // const authkey = req.headers.authkey.split(" ");
-  var product = new Product();
-  product = {
-    ...product,
+  const product = {
     ...req.body,
     // createdBy: authkey[1],
     createdAt: Date(),
@@ -62,7 +60,7 @@ export const addSingleProduct = async (req: any, res: any) => {
                 .catch(() =>
                   res.status(502).send({ msg: "Not Able to Insert" })
                 );
-            else res.status(502).send({ msg: "Item ID already exist" });
+            else res.status(502).send({ msg: "Barcode already exist" });
           })
           .catch((e) => res.status(502).send({ msg: "Not Able to Insert" }));
       else res.status(502).send({ msg: "Item Code already exist" });
