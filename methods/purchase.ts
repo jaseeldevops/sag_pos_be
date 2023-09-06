@@ -17,7 +17,6 @@ export const getAllPurchases = async (req: any, res: any) => {
 
 export const getSinglePurchase = async (req: any, res: any) => {
   //   const authkey = req.headers.authkey.split(" ");
-
   await dbGetPurchase(req.params._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes?.list?.length; i++)
@@ -60,28 +59,42 @@ export const addPurchase = async (req: any, res: any) => {
     .catch(() => res.status(502).send({ msg: "Not Able to Insert (EPx4)" }));
 };
 
-// export const editSinglePurchase = async (req: any, res: any) => {
-// //   const authkey = req.headers.authkey.split(" ");
-//   var purchase = new Purchase();
-//   purchase = {
-//     ...purchase,
-//     ...req.body,
-//     updatedBy: authkey[1],
-//     updatedAt:new  Date(),
-//   };
-//   await dbGetPurchase(req.body?._id)
-//     .then(async (dbRes) => {
-//       for (let i = 0; i < dbRes.list.length; i++)
-//         dbRes.list[i].qty = -Number(dbRes.list[i].qty);
-//       await dbUpdatePurchase(authkey[0], purchase)
-//         .then(() => {
-//           res.send({ msg: "Succes" });
-//           addPurchaseToStock(authkey[0], purchase.list.concat(dbRes.list));
-//         })
-//         .catch(() => res.status(502).send({ msg: "Not Able to Insert" }));
-//     })
-//     .catch(() => res.status(502).send({ msg: "Not Able to Insert" }));
-// };
+export const editSinglePurchase = async (req: any, res: any) => {
+  //   const authkey = req.headers.authkey.split(" ");
+  const purchase = {
+    ...req.body,
+    // updatedBy: authkey[1],
+    updatedAt: new Date(),
+  };
+
+  if (req.body.hasOwnProperty("list")) {
+    if (typeof req.body.list === "object") {
+      if (!(req.body?.list?.length > 0)) {
+        res.status(422).send({ msg: "Add atleast one item (EPx5)" });
+        return;
+      }
+    } else {
+      res.status(422).send({ msg: "Not a valid list (EPx6)" });
+      return;
+    }
+  }
+
+  await dbGetPurchase(req.body?._id)
+    .then(async (dbRes) => {
+      for (let i = 0; i < dbRes?.list?.length; i++)
+        dbRes.list[i].qty = -Number(dbRes.list[i].qty);
+      await dbUpdatePurchase(purchase)
+        .then(() => {
+          res.send({ msg: "Succes" });
+          if (purchase.hasOwnProperty("list"))
+            addPurchaseToStock(purchase.list.concat(dbRes.list));
+        })
+        .catch(() =>
+          res.status(502).send({ msg: "Not Able to Insert (EPx7)" })
+        );
+    })
+    .catch(() => res.status(502).send({ msg: "Not Able to Insert (EPx8)" }));
+};
 
 // export const deleteSinglePurchase = async (req: any, res: any) => {
 //   //   const authkey = req.headers.authkey.split(" ");
