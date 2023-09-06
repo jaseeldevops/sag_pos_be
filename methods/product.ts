@@ -34,7 +34,9 @@ export const getProductsByBarcode = async (req: any, res: any) => {
 
 export const addSingleProduct = async (req: any, res: any) => {
   // const authkey = req.headers.authkey.split(" ");
-  const product = {
+  var product = new Product();
+  product = {
+    ...product,
     ...req.body,
     // createdBy: authkey[1],
     createdAt: Date(),
@@ -70,9 +72,7 @@ export const addSingleProduct = async (req: any, res: any) => {
 
 export const editSingleProduct = async (req: any, res: any) => {
   // const authkey = req.headers.authkey.split(" ");
-  var product = new Product();
-  product = {
-    ...product,
+  const product = {
     ...req.body,
     // updatedBy: authkey[1],
     updatedAt: Date(),
