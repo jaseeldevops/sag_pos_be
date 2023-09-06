@@ -112,7 +112,7 @@ const addPurchaseToStock = async (list: any) => {
     await dbGetProduct({}, list[i].itemId).then(async (dbRes) => {
       const body = {
         _id: list[i].itemId,
-        stock: Number(dbRes.stock) + Number(list[i].qty),
+        qty: Number(dbRes.qty || 0) + Number(list[i].qty || 0),
       };
       await dbUpdateProduct(body);
     });
