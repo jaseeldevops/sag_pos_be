@@ -67,9 +67,9 @@ export const editPurchase = async (req: any, res: any) => {
     updatedAt: new Date(),
   };
 
-  if (req.body.hasOwnProperty("list")) {
-    if (typeof req.body.list === "object") {
-      if (!(req.body?.list?.length > 0)) {
+  if (purchase.hasOwnProperty("list")) {
+    if (typeof purchase.list === "object") {
+      if (!(purchase?.list?.length > 0)) {
         res.status(422).send({ msg: "Add atleast one item (EPx5)" });
         return;
       }
@@ -79,7 +79,7 @@ export const editPurchase = async (req: any, res: any) => {
     }
   }
 
-  await dbGetPurchase(req.body?._id)
+  await dbGetPurchase(purchase?._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes?.list?.length; i++)
         dbRes.list[i].qty = -Number(dbRes.list[i].qty);
