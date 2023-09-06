@@ -85,7 +85,7 @@ export const editPurchase = async (req: any, res: any) => {
         dbRes.list[i].qty = -Number(dbRes.list[i].qty);
       await dbUpdatePurchase(purchase)
         .then(() => {
-          res.send({ msg: "Succes" });
+          res.send({ msg: "Succes",purchase });
           if (purchase.hasOwnProperty("list"))
             addPurchaseToStock(purchase.list.concat(dbRes.list));
         })
