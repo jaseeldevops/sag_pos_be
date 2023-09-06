@@ -17,6 +17,7 @@ export const getAllPurchases = async (req: any, res: any) => {
 
 export const getSinglePurchase = async (req: any, res: any) => {
   //   const authkey = req.headers.authkey.split(" ");
+  
   await dbGetPurchase(req.params._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes?.list?.length; i++)
@@ -31,7 +32,15 @@ export const getSinglePurchase = async (req: any, res: any) => {
 export const addPurchase = async (req: any, res: any) => {
   //   const authkey = req.headers.authkey.split(" ");
 
-  if (req.body?.list?.length < 1) {
+  if (!req.body.hasOwnProperty("list")) {
+    res.status(422).send({ msg: "Item List is missing" });
+    return;
+  }
+  if (typeof req.body.list === 'object') {
+    res.status(422).send({ msg: "Item List is missing" });
+    return;
+  }
+  if (!(req.body?.list?.length > 0)) {
     res.status(422).send({ msg: "Add atleast one item" });
     return;
   }
@@ -41,7 +50,7 @@ export const addPurchase = async (req: any, res: any) => {
     ...purchase,
     ...req.body,
     // createdBy: authkey[1],
-    createdAt: Date(),
+    createdAt: new Date(),
   };
   await dbPostPurchase(purchase)
     .then(() => {
@@ -58,7 +67,7 @@ export const addPurchase = async (req: any, res: any) => {
 //     ...purchase,
 //     ...req.body,
 //     updatedBy: authkey[1],
-//     updatedAt: Date(),
+//     updatedAt:new  Date(),
 //   };
 //   await dbGetPurchase(req.body?._id)
 //     .then(async (dbRes) => {
@@ -77,7 +86,7 @@ export const addPurchase = async (req: any, res: any) => {
 // export const deleteSinglePurchase = async (req: any, res: any) => {
 //   //   const authkey = req.headers.authkey.split(" ");
 //   //   req.params.deletedBy = authkey[1];
-//   req.params.deletedAt = Date();
+//   req.params.deletedAt =new  Date();
 //   req.params.deleted = true;
 
 //   await dbGetPurchase(req.params?._id)
@@ -99,7 +108,7 @@ export const addPurchase = async (req: any, res: any) => {
 // //////////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////
 const addPurchaseToStock = async (list: any) => {
-  for (let i = 0; i < list.length; i++) {
+  for (let i = 0; i < list?.length; i++) {
     await dbGetProduct({}, list[i].itemId).then(async (dbRes) => {
       const body = {
         _id: list[i].itemId,

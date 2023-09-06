@@ -39,7 +39,7 @@ export const addSingleProduct = async (req: any, res: any) => {
     ...product,
     ...req.body,
     // createdBy: authkey[1],
-    createdAt: Date(),
+    createdAt: new Date(),
   };
 
   if (product.itemCode === "") {
@@ -75,7 +75,7 @@ export const editSingleProduct = async (req: any, res: any) => {
   const product = {
     ...req.body,
     // updatedBy: authkey[1],
-    updatedAt: Date(),
+    updatedAt: new Date(),
   };
 
   if (product.hasOwnProperty("itemCode")) {
