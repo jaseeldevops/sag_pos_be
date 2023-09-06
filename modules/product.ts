@@ -18,7 +18,7 @@ export class Purchase {
   supplier: string = "";
   date: string = "";
   note: string = "";
-  list: PurchaseEach[] = [new PurchaseEach()];
+  list: PurchaseEach[] = [];
   totalPrice: number = 0;
   createdBy: string = "";
   createdAt: string = "";

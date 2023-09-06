@@ -2,7 +2,7 @@ const express = require("express");
 import {
   getAllPurchases,
   getSinglePurchase,
-  addSinglePurchase,
+  addPurchase,
   //   editSinglePurchase,
   //   deleteSinglePurchase,
 } from "../methods/purchase";
@@ -45,7 +45,7 @@ a1.delete("/product/:_id", deleteSingleProduct);
 // ////////////////////////////////////////////////////////////////
 a1.get("/purchases", getAllPurchases);
 a1.get("/purchase/:_id", getSinglePurchase);
-a1.post("/purchase", addSinglePurchase);
+a1.post("/purchase", addPurchase);
 // a1.put("/purchase", editSinglePurchase);
 // a1.delete("/purchase/:_id", deleteSinglePurchase);
 // ////////////////////////////////////////////////////////////////

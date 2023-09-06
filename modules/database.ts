@@ -60,7 +60,10 @@ export const dbUpdateProduct = async (data: any) => {
 // ///////////////////////////////////////////////////////
 export const dbGetPurchases = async (query?: any) => {
   const collection = database.collection("purchase");
-  return collection.find({ deleted: { $ne: true } }, query).toArray();
+  return collection
+    .find({ deleted: { $ne: true } }, query)
+    .sort({ $natural: -1 })
+    .toArray();
 };
 export const dbGetPurchase = async (_id: any) => {
   const collection = database.collection("purchase");

@@ -28,8 +28,14 @@ export const getSinglePurchase = async (req: any, res: any) => {
     .catch((e) => res.status(502).send({ msg: "Unable To feach Data" }));
 };
 
-export const addSinglePurchase = async (req: any, res: any) => {
+export const addPurchase = async (req: any, res: any) => {
   //   const authkey = req.headers.authkey.split(" ");
+
+  if (req.body?.list?.length < 1) {
+    res.status(422).send({ msg: "Add atleast one item" });
+    return;
+  }
+
   var purchase = new Purchase();
   purchase = {
     ...purchase,
