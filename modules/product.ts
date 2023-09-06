@@ -30,7 +30,7 @@ export class Purchase {
 }
 
 export class PurchaseEach {
-  product: string = "";
+  itemId: string = "";
   qty: number = 0;
   price: number = 0;
 }
@@ -51,7 +51,7 @@ export class Sale {
 }
 
 export class SaleEach {
-  product: string = "";
+  itemId: string = "";
   qty: number = 1;
   price: number = 0;
   cgst: number = 9;

@@ -50,7 +50,6 @@ export const dbPostProduct = async (data: Product) => {
   return collection.insertOne(data);
 };
 export const dbUpdateProduct = async (data: any) => {
-  // const database = client.db(org);
   const collection = database.collection("products");
   const _id = new ObjectId(data._id);
   delete data._id;
@@ -58,6 +57,26 @@ export const dbUpdateProduct = async (data: any) => {
 };
 // ///////////////////////////////////////////////////////
 
+// ///////////////////////////////////////////////////////
+export const dbGetPurchases = async (query?: any) => {
+  const collection = database.collection("purchase");
+  return collection.find({ deleted: { $ne: true } }, query).toArray();
+};
+export const dbGetPurchase = async (_id: any) => {
+  const collection = database.collection("purchase");
+  return collection.findOne({ _id: new ObjectId(_id) });
+};
+export const dbPostPurchase = async (data: any) => {
+  const collection = database.collection("purchase");
+  return collection.insertOne(data);
+};
+export const dbUpdatePurchase = async (data: any) => {
+  const collection = database.collection("purchase");
+  const _id = new ObjectId(data._id);
+  delete data._id;
+  return collection.updateOne({ _id }, { $set: data });
+};
+// ///////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////
 export const dbGetSales = async (org: any, query?: any) => {
   const database = client.db(org);

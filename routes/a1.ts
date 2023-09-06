@@ -1,12 +1,19 @@
 const express = require("express");
-// import {
-//   getAllPurchases,
-//   getSinglePurchase,
-//   addSinglePurchase,
-//   editSinglePurchase,
-//   deleteSinglePurchase,
-// } from "../methods/purchase";
-import { addSingleProduct, deleteSingleProduct, editSingleProduct, getAllProducts, getProductsByBarcode, getProductsBySearch } from "../methods/product";
+import {
+  getAllPurchases,
+  getSinglePurchase,
+  addSinglePurchase,
+  //   editSinglePurchase,
+  //   deleteSinglePurchase,
+} from "../methods/purchase";
+import {
+  addSingleProduct,
+  deleteSingleProduct,
+  editSingleProduct,
+  getAllProducts,
+  getProductsByBarcode,
+  getProductsBySearch,
+} from "../methods/product";
 import {
   getAllSales,
   getSingleSale,
@@ -36,9 +43,9 @@ a1.post("/product", addSingleProduct);
 a1.put("/product", editSingleProduct);
 a1.delete("/product/:_id", deleteSingleProduct);
 // ////////////////////////////////////////////////////////////////
-// a1.get("/purchases", getAllPurchases);
-// a1.get("/purchase/:_id", getSinglePurchase);
-// a1.post("/purchase", addSinglePurchase);
+a1.get("/purchases", getAllPurchases);
+a1.get("/purchase/:_id", getSinglePurchase);
+a1.post("/purchase", addSinglePurchase);
 // a1.put("/purchase", editSinglePurchase);
 // a1.delete("/purchase/:_id", deleteSinglePurchase);
 // ////////////////////////////////////////////////////////////////
