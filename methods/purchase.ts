@@ -33,15 +33,15 @@ export const addPurchase = async (req: any, res: any) => {
   //   const authkey = req.headers.authkey.split(" ");
 
   if (!req.body.hasOwnProperty("list")) {
-    res.status(422).send({ msg: "Item List is missing" });
+    res.status(422).send({ msg: "Item List is missing (EPx1)" });
     return;
   }
   if (typeof req.body.list === 'object') {
-    res.status(422).send({ msg: "Item List is missing" });
+    res.status(422).send({ msg: "Item List is missing (EPx2)" });
     return;
   }
   if (!(req.body?.list?.length > 0)) {
-    res.status(422).send({ msg: "Add atleast one item" });
+    res.status(422).send({ msg: "Add atleast one item (EPx3)" });
     return;
   }
 
@@ -57,7 +57,7 @@ export const addPurchase = async (req: any, res: any) => {
       res.send({ msg: "Succes" });
       addPurchaseToStock(purchase.list);
     })
-    .catch(() => res.status(502).send({ msg: "Not Able to Insert" }));
+    .catch(() => res.status(502).send({ msg: "Not Able to Insert (EPx4)" }));
 };
 
 // export const editSinglePurchase = async (req: any, res: any) => {
