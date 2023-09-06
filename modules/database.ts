@@ -28,7 +28,10 @@ export const dbGetCollectionCount = async (org: any, item: any, query: any) => {
 // ///////////////////////////////////////////////////////
 export const dbGetProducts = async () => {
   const collection = database.collection("products");
-  return collection.find({ deleted: { $ne: true } }).sort({x:1}).toArray();
+  return collection
+    .find({ deleted: { $ne: true } })
+    .sort({ $natural: -1 })
+    .toArray();
 };
 export const dbSearchProducts = async (search: any) => {
   const collection = database.collection("products");
