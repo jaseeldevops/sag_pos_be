@@ -21,7 +21,7 @@ export const getSinglePurchase = async (req: any, res: any) => {
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes?.list?.length; i++)
         await dbGetProduct({}, dbRes?.list[i].product).then(
-          (res) => (dbRes.list[i].productName = res?.name || "er(404)")
+          (res) => (dbRes.list[i].itemName = res?.itemName || "er(404)")
         );
       res.send(dbRes);
     })
@@ -85,7 +85,7 @@ export const editPurchase = async (req: any, res: any) => {
         dbRes.list[i].qty = -Number(dbRes.list[i].qty);
       await dbUpdatePurchase(purchase)
         .then(() => {
-          res.send({ msg: "Succes",purchase });
+          res.send({ msg: "Succes" });
           if (purchase.hasOwnProperty("list"))
             addPurchaseToStock(purchase.list.concat(dbRes.list));
         })
