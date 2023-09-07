@@ -1,4 +1,4 @@
-import { Product } from "./product";
+import { Customer, Product } from "./product";
 
 const { MongoClient, ObjectId } = require("mongodb");
 
@@ -80,6 +80,39 @@ export const dbUpdatePurchase = async (data: any) => {
   return collection.updateOne({ _id }, { $set: data });
 };
 // ///////////////////////////////////////////////////////
+
+// ///////////////////////////////////////////////////////
+export const dbGetCustomers = async () => {
+  const collection = database.collection("customers");
+  return collection
+    .find({ deleted: { $ne: true } })
+    .sort({ $natural: -1 })
+    .toArray();
+};
+export const dbSearchCustomers = async (search: any) => {
+  const collection = database.collection("customers");
+  let regex = new RegExp(search, "i");
+  return collection
+    .find({ deleted: { $ne: true }, itemName: { $regex: regex } })
+    .toArray();
+};
+export const dbGetCustomer = async (data: any, _id?: any) => {
+  const collection = database.collection("customers");
+  if (_id) return collection.findOne({ _id: new ObjectId(_id) });
+  return collection.findOne(data);
+};
+export const dbPostCustomer = async (data: Customer) => {
+  const collection = database.collection("customers");
+  return collection.insertOne(data);
+};
+export const dbUpdateCustomer = async (data: any) => {
+  const collection = database.collection("customers");
+  const _id = new ObjectId(data._id);
+  delete data._id;
+  return collection.updateOne({ _id }, { $set: data });
+};
+// ///////////////////////////////////////////////////////
+
 // ///////////////////////////////////////////////////////
 export const dbGetSales = async (org: any, query?: any) => {
   const database = client.db(org);

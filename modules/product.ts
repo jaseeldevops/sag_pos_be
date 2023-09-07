@@ -13,6 +13,19 @@ export class Product {
   deletedAt: string = "";
   deleted: boolean = false;
 }
+export class Customer {
+  name: string = "";
+  phone: string = "";
+  dob: string = "";
+  email: string = "";
+  createdBy: string = "";
+  createdAt: string = "";
+  updatedBy: string = "";
+  updatedAt: string = "";
+  deletedBy: string = "";
+  deletedAt: string = "";
+  deleted: boolean = false;
+}
 
 export class Purchase {
   supplier: string = "";

@@ -107,9 +107,7 @@ export const editProduct = async (req: any, res: any) => {
 };
 
 export const deleteProduct = async (req: any, res: any) => {
-  // const authkey = req.headers.authkey.split(" ");
-  // req.params.deletedBy = authkey[1];
-  req.params.deletedAt = Date();
+  req.params.deletedAt = new Date();
   req.params.deleted = true;
   await dbUpdateProduct(req.params)
     .then(() => res.send({ msg: "Succes" }))
