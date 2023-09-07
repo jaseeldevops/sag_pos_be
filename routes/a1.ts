@@ -10,6 +10,7 @@ import {
   addProduct,
   deleteProduct,
   editProduct,
+  getAllProduct,
   getAllProducts,
   getProductsByBarcode,
   getProductsBySearch,
@@ -38,6 +39,7 @@ export const a1: any = express.Router();
 // a1.get("/dashboard", getDashBoardData);
 // ////////////////////////////////////////////////////////////////
 a1.get("/products", getAllProducts);
+a1.get("/product/:_id", getAllProduct);
 a1.get("/productsbybarcode/:barcode", getProductsByBarcode);
 a1.get("/products/:search", getProductsBySearch);
 a1.post("/product", addProduct);

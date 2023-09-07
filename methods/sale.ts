@@ -30,7 +30,7 @@ export const addSingleSale = async (req: any, res: any) => {
     ...item,
     ...req.body,
     createdBy: "",
-    createdAt: Date(),
+    createdAt: new Date(),
   };
 
   if (item.hasOwnProperty("customer")) {
@@ -52,7 +52,7 @@ export const addSingleSale = async (req: any, res: any) => {
 };
 
 export const editSingleSale = async (req: any, res: any) => {
-  const item = { ...req.body, updatedBy: "", updatedAt: Date() };
+  const item = { ...req.body, updatedBy: "", updatedAt: new Date() };
   await dbGetSale(req.body._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes.list.length; i++)
@@ -69,7 +69,7 @@ export const editSingleSale = async (req: any, res: any) => {
 
 export const deleteSingleSale = async (req: any, res: any) => {
   req.params.deletedBy = "";
-  req.params.deletedAt = Date();
+  req.params.deletedAt = new Date();
   req.params.deleted = true;
   dbGetSale(req.params._id)
     .then(async (dbRes) => {
