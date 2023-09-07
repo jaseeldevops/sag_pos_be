@@ -26,6 +26,8 @@ export const dbGetCollectionCount = async (org: any, item: any, query: any) => {
   return collection.count({ deleted: { $ne: true }, ...query });
 };
 // ///////////////////////////////////////////////////////
+
+// ///////////////////////////////////////////////////////
 export const dbGetProducts = async () => {
   const collection = database.collection("products");
   return collection
@@ -93,7 +95,7 @@ export const dbSearchCustomers = async (search: any) => {
   const collection = database.collection("customers");
   let regex = new RegExp(search, "i");
   return collection
-    .find({ deleted: { $ne: true }, itemName: { $regex: regex } })
+    .find({ deleted: { $ne: true }, name: { $regex: regex } })
     .toArray();
 };
 export const dbGetCustomer = async (data: any, _id?: any) => {
