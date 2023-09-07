@@ -11,9 +11,11 @@ import { Sale } from "../modules/product";
 export const getAllSales = async (req: any, res: any) => {
   await dbGetSales()
     .then((dbRes) => res.send(dbRes))
-    .catch((e) => res.status(502).send({ msg: "Unable To feach Data (ESaA1)" }));
+    .catch((e) =>
+      res.status(502).send({ msg: "Unable To feach Data (ESaA1)" })
+    );
 };
-export const getSingleSale = async (req: any, res: any) => {
+export const getSale = async (req: any, res: any) => {
   await dbGetSale(req.params._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes?.list?.length; i++)
@@ -22,9 +24,11 @@ export const getSingleSale = async (req: any, res: any) => {
         );
       res.send(dbRes);
     })
-    .catch((e) => res.status(502).send({ msg: "Unable To feach Data (ESaB1)" }));
+    .catch((e) =>
+      res.status(502).send({ msg: "Unable To feach Data (ESaB1)" })
+    );
 };
-export const addSingleSale = async (req: any, res: any) => {
+export const addSale = async (req: any, res: any) => {
   var item = new Sale();
   item = {
     ...item,
@@ -51,7 +55,7 @@ export const addSingleSale = async (req: any, res: any) => {
     .catch(() => res.status(502).send({ msg: "Not Able to Insert (ESaC3)" }));
 };
 
-export const editSingleSale = async (req: any, res: any) => {
+export const editSale = async (req: any, res: any) => {
   const item = { ...req.body, updatedBy: "", updatedAt: new Date() };
   await dbGetSale(req.body._id)
     .then(async (dbRes) => {
@@ -62,12 +66,14 @@ export const editSingleSale = async (req: any, res: any) => {
           res.send({ msg: "Succes" });
           addSaleToStock(item.list.concat(dbRes.list));
         })
-        .catch(() => res.status(502).send({ msg: "Not Able to Insert (ESaD1)" }));
+        .catch(() =>
+          res.status(502).send({ msg: "Not Able to Insert (ESaD1)" })
+        );
     })
     .catch(() => res.status(502).send({ msg: "Not Able to Insert (ESaD2)" }));
 };
 
-export const deleteSingleSale = async (req: any, res: any) => {
+export const deleteSale = async (req: any, res: any) => {
   req.params.deletedBy = "";
   req.params.deletedAt = new Date();
   req.params.deleted = true;
@@ -80,7 +86,9 @@ export const deleteSingleSale = async (req: any, res: any) => {
           res.send({ msg: "Succes" });
           addSaleToStock(dbRes.list);
         })
-        .catch(() => res.status(502).send({ msg: "Not Able to Delete (ESaE1)" }));
+        .catch(() =>
+          res.status(502).send({ msg: "Not Able to Delete (ESaE1)" })
+        );
     })
     .catch(() => res.status(502).send({ msg: "Not Able to Delete (ESaE2)" }));
 };
@@ -92,7 +100,7 @@ const addSaleToStock = async (list: any) => {
   for (let i = 0; i < list.length; i++) {
     await dbGetProduct({}, list[i].itemId).then(async (dbRes) => {
       const body = {
-        _id: list[i].product,
+        _id: list[i].itemId,
         qty: Number(dbRes.qty) - Number(list[i].qty),
       };
       await dbUpdateProduct(body);

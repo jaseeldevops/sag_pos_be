@@ -17,10 +17,10 @@ import {
 } from "../methods/product";
 import {
   getAllSales,
-  getSingleSale,
-  addSingleSale,
-  editSingleSale,
-  deleteSingleSale,
+  getSale,
+  addSale,
+  editSale,
+  deleteSale,
 } from "../methods/sale";
 import {
   getAllUsers,
@@ -31,7 +31,13 @@ import {
 import { getDashBoardData } from "../methods/dashboard";
 import { userLogin } from "../methods/login";
 import { getAllCategory, getAllUnits } from "../methods/settings";
-import { addCustomer, deleteCustomer, editCustomer, getAllCustomers, getCustomerBySearch } from "../methods/customer";
+import {
+  addCustomer,
+  deleteCustomer,
+  editCustomer,
+  getAllCustomers,
+  getCustomerBySearch,
+} from "../methods/customer";
 
 export const a1: any = express.Router();
 // a1.post("/login", userLogin);
@@ -59,10 +65,10 @@ a1.put("/purchase", editPurchase);
 a1.delete("/purchase/:_id", deletePurchase);
 // ////////////////////////////////////////////////////////////////
 a1.get("/sales", getAllSales);
-a1.get("/sale/:_id", getSingleSale);
-a1.post("/sale", addSingleSale);
-a1.put("/sale", editSingleSale);
-a1.delete("/sale/:_id", deleteSingleSale);
+a1.get("/sale/:_id", getSale);
+a1.post("/sale", addSale);
+a1.put("/sale", editSale);
+a1.delete("/sale/:_id", deleteSale);
 // // ////////////////////////////////////////////////////////////////
 // a1.get("/staffs", getAllUsers);
 // a1.post("/staff", addSingleUser);
