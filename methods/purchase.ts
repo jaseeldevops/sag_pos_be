@@ -20,7 +20,7 @@ export const getSinglePurchase = async (req: any, res: any) => {
   await dbGetPurchase(req.params._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes?.list?.length; i++)
-        await dbGetProduct({}, dbRes?.list[i].product).then(
+        await dbGetProduct({}, dbRes?.list[i].itemId).then(
           (res) => (dbRes.list[i].itemName = res?.itemName || "er(404)")
         );
       res.send(dbRes);
