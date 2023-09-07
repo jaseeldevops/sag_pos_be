@@ -99,7 +99,7 @@ export const deleteSale = async (req: any, res: any) => {
 // //////////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////
 const addSaleToStock = async (list: any) => {
-  for (let i = 0; i < list.length; i++) {
+  for (let i = 0; i < list?.length; i++) {
     await dbGetProduct({}, list[i].itemId).then(async (dbRes) => {
       const body = {
         _id: list[i].itemId,
