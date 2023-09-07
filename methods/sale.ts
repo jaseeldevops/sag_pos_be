@@ -70,7 +70,7 @@ export const editSale = async (req: any, res: any) => {
           res.status(502).send({ msg: "Not Able to Insert (ESaD1)" })
         );
     })
-    .catch(() => res.status(502).send({ msg: "Not Able to Insert (ESaD2)" }));
+    .catch((e) => res.status(502).send({ msg: "Not Able to Insert (ESaD2)",e }));
 };
 
 export const deleteSale = async (req: any, res: any) => {
