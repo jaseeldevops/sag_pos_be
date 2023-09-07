@@ -9,88 +9,93 @@ import {
 import { Sale } from "../modules/product";
 
 export const getAllSales = async (req: any, res: any) => {
-  const authkey = req.headers.authkey.split(" ");
-  req.body.creater = authkey[1];
-  await dbGetSales(authkey[0])
+  await dbGetSales()
     .then((dbRes) => res.send(dbRes))
-    .catch((e) => res.status(502).send({ msg: "Unable To feach Data" }));
+    .catch((e) => res.status(502).send({ msg: "Unable To feach Data (ESaA1)" }));
 };
 export const getSingleSale = async (req: any, res: any) => {
-  const authkey = req.headers.authkey.split(" ");
-  req.body.creater = authkey[1];
-  await dbGetSale(authkey[0], req.params._id)
+  await dbGetSale(req.params._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes?.list?.length; i++)
-        await dbGetProduct(authkey[0], {}, dbRes?.list[i].product).then(
-          (res) => (dbRes.list[i].productName = res?.name || "er(404)")
+        await dbGetProduct({}, dbRes?.list[i].product).then(
+          (res) => (dbRes.list[i].itemName = res?.itemName || "er(404)")
         );
       res.send(dbRes);
     })
-    .catch((e) => res.status(502).send({ msg: "Unable To feach Data" }));
+    .catch((e) => res.status(502).send({ msg: "Unable To feach Data (ESaB1)" }));
 };
 export const addSingleSale = async (req: any, res: any) => {
-  const authkey = req.headers.authkey.split(" ");
-  var sale = new Sale();
-  sale = {
-    ...sale,
+  var item = new Sale();
+  item = {
+    ...item,
     ...req.body,
-    createdBy: authkey[1],
+    createdBy: "",
     createdAt: Date(),
   };
-  await dbPostSale(authkey[0], sale)
+
+  if (item.hasOwnProperty("customer")) {
+    if (item.customer.length < 1) {
+      res.status(422).send({ msg: "Not a valid Customer (ESaC1)" });
+      return;
+    }
+  } else {
+    res.status(422).send({ msg: "Customer ID is required (ESaC2)" });
+    return;
+  }
+
+  await dbPostSale(item)
     .then(() => {
       res.send({ msg: "Succes" });
-      addSaleToStock(authkey[0], sale.list);
+      addSaleToStock(item.list);
     })
-    .catch(() => res.status(502).send({ msg: "Not Able to Insert" }));
+    .catch(() => res.status(502).send({ msg: "Not Able to Insert (ESaC3)" }));
 };
+
 export const editSingleSale = async (req: any, res: any) => {
-  const authkey = req.headers.authkey.split(" ");
-  var sale = new Sale();
-  sale = { ...sale, ...req.body, updatedBy: authkey[1], updatedAt: Date() };
-  await dbGetSale(authkey[0], req.body._id)
+  const item = { ...req.body, updatedBy: "", updatedAt: Date() };
+  await dbGetSale(req.body._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes.list.length; i++)
         dbRes.list[i].qty = -Number(dbRes.list[i].qty);
-      await dbUpdateSale(authkey[0], req.body)
+      await dbUpdateSale(req.body)
         .then(() => {
           res.send({ msg: "Succes" });
-          addSaleToStock(authkey[0], sale.list.concat(dbRes.list));
+          addSaleToStock(item.list.concat(dbRes.list));
         })
-        .catch(() => res.status(502).send({ msg: "Not Able to Insert" }));
+        .catch(() => res.status(502).send({ msg: "Not Able to Insert (ESaD1)" }));
     })
-    .catch(() => res.status(502).send({ msg: "Not Able to Insert" }));
+    .catch(() => res.status(502).send({ msg: "Not Able to Insert (ESaD2)" }));
 };
+
 export const deleteSingleSale = async (req: any, res: any) => {
-  const authkey = req.headers.authkey.split(" ");
-  req.params.deletedBy = authkey[1];
+  req.params.deletedBy = "";
   req.params.deletedAt = Date();
   req.params.deleted = true;
-  dbGetSale(authkey[0], req.params._id)
+  dbGetSale(req.params._id)
     .then(async (dbRes) => {
       for (let i = 0; i < dbRes.list.length; i++)
         dbRes.list[i].qty = -Number(dbRes.list[i].qty);
-      await dbUpdateSale(authkey[0], req.params)
+      await dbUpdateSale(req.params)
         .then(() => {
           res.send({ msg: "Succes" });
-          addSaleToStock(authkey[0], dbRes.list);
+          addSaleToStock(dbRes.list);
         })
-        .catch(() => res.status(502).send({ msg: "Not Able to Delete" }));
+        .catch(() => res.status(502).send({ msg: "Not Able to Delete (ESaE1)" }));
     })
-    .catch(() => res.status(502).send({ msg: "Not Able to Delete" }));
+    .catch(() => res.status(502).send({ msg: "Not Able to Delete (ESaE2)" }));
 };
 // //////////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////
-const addSaleToStock = async (authkey: any, list: any) => {
+const addSaleToStock = async (list: any) => {
   for (let i = 0; i < list.length; i++) {
-    await dbGetProduct(authkey, {}, list[i].product).then(async (dbRes) => {
+    await dbGetProduct({}, list[i].itemId).then(async (dbRes) => {
       const body = {
         _id: list[i].product,
-        stock: Number(dbRes.stock) - Number(list[i].qty),
+        qty: Number(dbRes.qty) - Number(list[i].qty),
       };
-      await dbUpdateProduct(authkey, body);
+      await dbUpdateProduct(body);
     });
   }
 };

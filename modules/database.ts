@@ -116,23 +116,22 @@ export const dbUpdateCustomer = async (data: any) => {
 // ///////////////////////////////////////////////////////
 
 // ///////////////////////////////////////////////////////
-export const dbGetSales = async (org: any, query?: any) => {
-  const database = client.db(org);
+export const dbGetSales = async (query?: any) => {
   const collection = database.collection("sales");
-  return collection.find({ deleted: { $ne: true } }, query).toArray();
+  return collection
+    .find({ deleted: { $ne: true } }, query)
+    .sort({ $natural: -1 })
+    .toArray();
 };
-export const dbGetSale = async (org: any, _id: any) => {
-  const database = client.db(org);
+export const dbGetSale = async (_id: any) => {
   const collection = database.collection("sales");
   return collection.findOne({ _id: new ObjectId(_id) });
 };
-export const dbPostSale = async (org: any, data: any) => {
-  const database = client.db(org);
+export const dbPostSale = async (data: any) => {
   const collection = database.collection("sales");
   return collection.insertOne(data);
 };
-export const dbUpdateSale = async (org: any, data: any) => {
-  const database = client.db(org);
+export const dbUpdateSale = async (data: any) => {
   const collection = database.collection("sales");
   const _id = new ObjectId(data._id);
   delete data._id;

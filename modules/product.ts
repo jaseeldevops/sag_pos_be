@@ -44,7 +44,7 @@ export class Purchase {
 
 export class PurchaseEach {
   itemId: string = "";
-  qty: number = 0;
+  qty: number = 1;
   price: number = 0;
 }
 
@@ -52,7 +52,7 @@ export class Sale {
   customer: string = "";
   date: string = "";
   note: string = "";
-  list: PurchaseEach[] = [new SaleEach()];
+  list: SaleEach[] = [];
   totalPrice: number = 0;
   createdBy: string = "";
   createdAt: string = "";

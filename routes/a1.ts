@@ -44,7 +44,6 @@ a1.post("/product", addProduct);
 a1.put("/product", editProduct);
 a1.delete("/product/:_id", deleteProduct);
 // ////////////////////////////////////////////////////////////////
-// ////////////////////////////////////////////////////////////////
 a1.get("/customers", getAllCustomers);
 a1.get("/customers/:search", getCustomerBySearch);
 a1.post("/customer", addCustomer);
@@ -57,11 +56,11 @@ a1.post("/purchase", addPurchase);
 a1.put("/purchase", editPurchase);
 a1.delete("/purchase/:_id", deletePurchase);
 // ////////////////////////////////////////////////////////////////
-// a1.get("/sales", getAllSales);
-// a1.get("/sale/:_id", getSingleSale);
-// a1.post("/sale", addSingleSale);
-// a1.put("/sale", editSingleSale);
-// a1.delete("/sale/:_id", deleteSingleSale);
+a1.get("/sales", getAllSales);
+a1.get("/sale/:_id", getSingleSale);
+a1.post("/sale", addSingleSale);
+a1.put("/sale", editSingleSale);
+a1.delete("/sale/:_id", deleteSingleSale);
 // // ////////////////////////////////////////////////////////////////
 // a1.get("/staffs", getAllUsers);
 // a1.post("/staff", addSingleUser);
