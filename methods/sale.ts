@@ -59,8 +59,8 @@ export const editSale = async (req: any, res: any) => {
   const item = { ...req.body, updatedBy: "", updatedAt: new Date() };
   await dbGetSale(req.body._id)
     .then(async (dbRes) => {
-      for (let i = 0; i < dbRes.list.length; i++)
-        dbRes.list[i].qty = -Number(dbRes.list[i].qty);
+      // for (let i = 0; i < dbRes.list.length; i++)
+      //   dbRes.list[i].qty = -Number(dbRes.list[i].qty);
       await dbUpdateSale(req.body)
         .then(() => {
           res.send({ msg: "Succes" });
